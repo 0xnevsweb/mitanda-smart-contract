@@ -221,8 +221,7 @@ contract Tanda is ReentrancyGuard {
      */
     function triggerPayout() external nonReentrant onlyActiveTanda {
         // Check if payout time has arrived
-        uint256 nextPayoutTime = startTimestamp +
-            (currentCycle * payoutInterval);
+        uint256 nextPayoutTime = startTimestamp + payoutInterval;
         require(block.timestamp >= nextPayoutTime, "Payout time not reached");
 
         // Check all participants are paid up
@@ -247,13 +246,15 @@ contract Tanda is ReentrancyGuard {
             creatorAmount -
             treasuryAmount;
 
-        // Update state before transfer
-        currentCycle++;
-        totalFunds -= totalPayoutAmount;
+        startTimestamp = block.timestamp;
 
         // Get current cycle recipient
         address payable recipient = participants[payoutOrder[currentCycle - 1]]
             .addr;
+
+        // Update state before transfer
+        currentCycle++;
+        totalFunds -= totalPayoutAmount;
 
         // Distribute funds
         if (creatorAmount > 0) {
@@ -448,7 +449,7 @@ contract Tanda is ReentrancyGuard {
         participantsCount = participants.length;
         funds = totalFunds;
         nextPayout = state == TandaState.ACTIVE
-            ? startTimestamp + (currentCycle * payoutInterval)
+            ? startTimestamp + payoutInterval
             : 0;
     }
 

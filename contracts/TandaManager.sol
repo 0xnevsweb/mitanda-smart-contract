@@ -154,7 +154,7 @@ contract TandaManager is VRFConsumerBaseV2Plus {
             _contributionAmount >= 10 * 10 ** 6,
             "Minimum contribution 10 USDC"
         );
-        require(_payoutInterval >= 1 days, "Minimum interval 1 day");
+        // require(_payoutInterval >= 1 days, "Minimum interval 1 day");
         require(_payoutInterval <= 30 days, "Maximum interval 30 days");
         require(_participantCount >= 2, "Minimum 2 participants");
         require(
