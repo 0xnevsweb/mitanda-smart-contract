@@ -17,8 +17,8 @@ contract TandaManager is VRFConsumerBaseV2Plus {
     address public immutable usdcAddress;
     uint256 public nextTandaId;
     uint16 public maxParticipants = 30;
-    uint16 public creatorFee = 200;
-    uint16 public treasuryFee = 300;
+    uint16 public creatorFee = 300;
+    uint16 public treasuryFee = 200;
     address public treasuryWallet;
 
     mapping(uint256 => address) public tandaIdToAddress;
